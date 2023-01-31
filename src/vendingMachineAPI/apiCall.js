@@ -1,5 +1,5 @@
 const express = require("express");
-const purchaseFunctions = require("../vendingMachine/utlities/purchase.js");
+const purchaseFunctions = require("../vendingMachineAPI/utlities/purchase.js");
 
 const app = express();
 const port = 3001;
