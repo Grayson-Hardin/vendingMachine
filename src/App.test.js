@@ -1,7 +1,7 @@
 import React from "react";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import VendingMachine from "./App";
-import * as lib from "./service";
+import * as lib from "./api/service";
 import userEvent from "@testing-library/user-event";
 
 process.env.DEBUG_PRINT_LIMIT = 1000000;
