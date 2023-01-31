@@ -1,15 +1,17 @@
+
+
 # Setup
+![Example](/Users/ghardin/Desktop/VendingMachine/image-example.png)
 
 ## Start API
 
 To initialize the backend...
 
-1. Vavigate to <code>src/api/</code>
+1. Navigate to <code>src/api/</code>
 1. Run the following command
    > <code>npm run devAPI</code>
 
 <br></br>
-
 ## Start App
 
 To start the React App...
