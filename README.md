@@ -1,7 +1,6 @@
-
-
 # Setup
-![Example](/Users/ghardin/Desktop/VendingMachine/image-example.png)
+
+![My Image](example-image.png)
 
 ## Start API
 
@@ -12,6 +11,7 @@ To initialize the backend...
    > <code>npm run devAPI</code>
 
 <br></br>
+
 ## Start App
 
 To start the React App...
