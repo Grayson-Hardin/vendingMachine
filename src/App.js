@@ -30,18 +30,21 @@ function VendingMachine() {
   const handleSubmit = async (selection) => {
     const message = await purchaseItem(selection, coins);
 
-    if (message.status === "error") {
-      setStatus("error");
-    }
-
-    if (message.status === "success") {
-      setStatus("success");
-      resetState();
-    }
-
+    checkStatus(message.status);
     setOpen(true);
     setShowMessage(message.message);
     setSelection(selection);
+  };
+
+  const checkStatus = (status) => {
+    if (status === "error") {
+      setStatus("error");
+    }
+
+    if (status === "success") {
+      setStatus("success");
+      resetState();
+    }
   };
 
   const addCoin = (coin, diameter, weight) => {
