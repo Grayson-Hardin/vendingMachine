@@ -54,9 +54,9 @@ function VendingMachine() {
   };
 
   return (
-    <Box width={"100"}>
+    <Box>
       <Paper elevation={5} className="box">
-        {" "}
+        {/* {" "} */}
         <h1>Vending Machine</h1>
         <h3>$1.00 per item</h3>
         <Button
@@ -153,7 +153,7 @@ function VendingMachine() {
             value="Diet Pepsi"
             onClick={() => handleSubmit("C4")}
           >
-            C4
+            C3
           </Button>
         </div>
         <div className="paymentButtons">

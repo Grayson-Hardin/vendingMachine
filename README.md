@@ -1,6 +1,6 @@
 # Setup
 
-![My Image](example-image.png)
+![My Image](example.png)
 
 ## Start API
 

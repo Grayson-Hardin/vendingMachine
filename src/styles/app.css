@@ -14,13 +14,13 @@ h2{
     text-align: center;
 }
 
-button {
+/* button {
     margin-top: 3%;
     margin-right: 2%;
     height: 3rem;
     border: 2px solid black;;
     background-color: lightgray;
-}
+} */
 
 .totalPayment{
     text-align: right;
@@ -35,7 +35,7 @@ button {
 }
 
  .alert{
-   margin-bottom: 15.5%;
+   margin-bottom: 0%;
 } 
 
 
@@ -91,11 +91,9 @@ button {
     }
 
     button {
-        display: block;
-        margin-top: 3%;
-        margin-right: 2%;
-        height: 2rem;
-        border: 2px solid black;;
+        margin: auto;
+        height: 1.7rem;
+        border: 2px solidblack;;
     }
     .payment{
         text-align: right;
@@ -106,5 +104,27 @@ button {
         width: 35%;
         
     }
-    
+    .paymentButtons{
+        margin-left: 0%;
+
+        margin-top: 10%;
+        width: 20%;
+        display: flex;
+        flex-direction: column;
+        
+    }
+
+    .done{
+        margin-top: 0%;
+        margin-left: 0%;
+    }
+    .box{
+        margin-top: auto;
+    }
+    .alert{
+        height: 10%;
+        width: 60%;
+        margin: auto;
+     } 
+     
   }
