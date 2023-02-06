@@ -5,11 +5,8 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
-import SportsBarIcon from "@mui/icons-material/SportsBar";
-import LocalBarIcon from "@mui/icons-material/LocalBar";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import DoneIcon from "@mui/icons-material/Done";
-import NoDrinksIcon from "@mui/icons-material/NoDrinks";
 import { purchaseItem } from "./api/service";
 
 function VendingMachine() {

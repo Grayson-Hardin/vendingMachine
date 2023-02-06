@@ -1,29 +1,53 @@
-let items = [
-    { name: "Mountain Dew", price: 1.0, inventory: 5, selection: "A1" },
-    { name: "Root Beer", price: 0.75, inventory: 0, selection: "A2" },
-    { name: "Dr Pepper", price: 0.5, inventory: 10, selection: "A3" },
-    { name: "Coke", price: 1.0, inventory: 15, selection: "B1" },
-    { name: "Pepsi", price: 1.0, inventory: 12, selection: "B2" },
-    { name: "Sprite", price: 1.0, inventory: 6, selection: "B3" },
-    { name: "Diet Coke", price: 1.0, inventory: 18, selection: "C1" },
-    { name: "Diet Mountain Dew", price: 1.0, inventory: 20, selection: "C2" },
-    { name: "Diet Pepsi", price: 1.0, inventory: 13, selection: "C4" },
-];
+const { Client } = require("pg");
+let client;
 
-function getItemBySelection(selection) {
-    return items.find((item) => item.selection === selection);
+async function setUpConnection(){
+    client = new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: 'mysecretpassword',
+    port: 5432,
+  })
+
+  await client.connect();
 }
 
-function isItemInStock(selection) {
-    return selection.inventory > 0;
+async function closeConnection(){
+  await client.end();
+
 }
 
-function updateInventory(selection) {
-    for (let item of items) {
-        if (item.selection === selection) {
-            item.inventory--;
-        }
-    }
+async function getItemBySelection(selection) {
+  setUpConnection()
+
+  const res = await client.query("SELECT * from items WHERE selection_id = $1", [selection]);
+
+  closeConnection()
+
+  return res.rows[0];
 }
 
-module.exports = { getItemBySelection, isItemInStock, updateInventory, items };
+async function isItemInStock(selection) {
+  setUpConnection()
+
+  const res = await client.query("SELECT inventory from items WHERE selection_id = $1", [selection]);
+
+  closeConnection()
+
+  return res.rows[0].inventory > 0
+}
+
+
+async function updateInventory(selection) {
+  setUpConnection()
+
+  const res = await client.query("UPDATE items SET inventory = inventory - 1 WHERE selection_id = $1", [selection]);
+
+  closeConnection()
+
+  return res.rows[0]
+
+}
+
+module.exports = { getItemBySelection, isItemInStock, updateInventory };

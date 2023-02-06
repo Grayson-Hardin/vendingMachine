@@ -28,14 +28,16 @@ app.use(function (req, res, next) {
 //     purchase();
 // });
 
-app.post("/vendingmachine", (req, res) => {
+app.post("/vendingmachine", async (req, res) => {
   let selection = req.body.selection;
   let coins = req.body.coins;
 
-  let message = purchaseFunctions.purchase(coins, selection).message;
-  let status = purchaseFunctions.purchase(coins, selection).status;
+  let response = await purchaseFunctions.purchase(coins, selection)
 
-  res.send({ message: message, status: status });
+  let message = response.message
+  let status = response.status
+
+  res.send({ message, status});
 });
 
 app.listen(port, () => {

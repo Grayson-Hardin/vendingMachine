@@ -2,93 +2,88 @@ const purchaseFunctions = require("../utlities/purchase");
 const coinFunctions = require("../data/coins");
 const vendingItemsFunctions = require("../data/vendingItems");
 
+
+beforeEach(async () => {
+  const spyGetItemBySelection = jest.spyOn(vendingItemsFunctions, "getItemBySelection")
+  spyGetItemBySelection.mockResolvedValue({ name: 'Mountain Dew', price: 1, inventory: 5, selection_id: 'A1' })
+
+  const spyIsItemInStock = jest.spyOn(vendingItemsFunctions, "isItemInStock")
+  spyIsItemInStock.mockResolvedValue(true)
+
+})
 describe("integration tests", () => {
-  it("should return error message if item is out of stock", () => {
+  it("should return error message if item is out of stock", async () => {
     const item = "A2";
 
-    const actual = purchaseFunctions.purchase([coinFunctions.dollar], item);
+    const spyIsItemInStock = jest.spyOn(vendingItemsFunctions, "isItemInStock")
+    spyIsItemInStock.mockResolvedValue(false)
+
+    const actual = await purchaseFunctions.purchase([], item);
 
     expect(actual).toEqual({ message: "Item out of stock", status: "error" });
   });
 
-  it("should return error", () => {
-    const item = "A2";
+  // it("should return error", async () => {
+  //   const item = "B2";
 
-    const actual = purchaseFunctions.purchase([coinFunctions.dollar], item);
+  //   const actual = await purchaseFunctions.purchase([coinFunctions.dollar], item);
 
-    expect(actual).toEqual({ message: "Item out of stock", status: "error" });
-  });
+  //   expect(actual).toEqual({ message: "Item out of stock", status: "error" });
+  // });
 
-  it("should return message if insufficient funds", () => {
+  // it("should return message if insufficient funds", () => {
+  //   const item = "A1";
+
+  //   vendingItemsFunctions.getItemBySelection(item);
+  //   const getItemProps = vendingItemsFunctions.items.find(
+  //     (item) => item.selection === "A1"
+  //   );
+
+  //   const actual = purchaseFunctions.purchase(
+  //     [{ diameter: 17.91, weight: 2.268 }],
+  //     item
+  //   );
+
+  //   expect(actual.message).toEqual(
+  //     `Insufficient funds: item costs $${getItemProps.price}`
+  //   );
+  // });
+
+  // only mock code that is not in purchase.js
+  // mock coinfunctions / vendingItems
+  // practice on mocking
+
+  it("should return message if insufficient funds", async () => {
     const item = "A1";
 
-    vendingItemsFunctions.getItemBySelection(item);
-    const getItemProps = vendingItemsFunctions.items.find(
-      (item) => item.selection === "A1"
-    );
+    const actual = await purchaseFunctions.purchase([], item);
 
-    const actual = purchaseFunctions.purchase(
-      [{ diameter: 17.91, weight: 2.268 }],
-      item
-    );
-
-    expect(actual.message).toEqual(
-      `Insufficient funds: item costs $${getItemProps.price}`
-    );
+    expect(actual).toEqual({ message: "Insufficient funds: item costs $1", status: "error", });
   });
 
-  it("should return message if insufficient funds", () => {
+  it("should return a message with the change amount", async () => {
+    const spyCoinManager = jest.spyOn(coinFunctions, "coinManager")
+    spyCoinManager.mockReturnValue(1.10)
+
     const item = "A1";
 
-    vendingItemsFunctions.getItemBySelection(item);
-    const getItemProps = vendingItemsFunctions.items.find(
-      (item) => item.selection === "A1"
-    );
+    const actual = await purchaseFunctions.purchase([], item);
 
-    const actual = purchaseFunctions.purchase(
-      [{ diameter: 17.91, weight: 2.268 }],
-      item
-    );
+    expect(actual.message).toEqual(`Mountain Dew Purchased. Change returned: $0.10`)
 
-    expect(actual).toEqual({
-      message: "Insufficient funds: item costs $1",
-      status: "error",
-    });
   });
 
-  it("should return a message with the change amount", () => {
+  it("should return thank you message if purchase was sucessfull", async () => {
+    const spyCoinManager = jest.spyOn(coinFunctions, "coinManager")
+    spyCoinManager.mockReturnValue(1.00)
+
     const item = "A1";
-    const payment = [
-      { diameter: 26.49, weight: 8.1 },
-      { diameter: 26.49, weight: 8.1 },
-    ];
 
-    const getItemProps = vendingItemsFunctions.items.find(
-      (item) => item.selection === "A1"
-    );
-    const change = purchaseFunctions.calculateChange(2, getItemProps);
+    const actual = await purchaseFunctions.purchase([], item);
 
-    const actual = purchaseFunctions.purchase(payment, item);
-
-    expect(actual.message).toEqual(
-      `${getItemProps.name} Purchased. Change returned: $${change}`
-    );
+    expect(actual).toEqual({ message: `Mountain Dew Purchased`, status: "success" });
   });
 
-  it("should return thank you message if purchase was sucessfull", () => {
-    const item = "A1";
-    vendingItemsFunctions.getItemBySelection("A1");
-    const getItemProps = vendingItemsFunctions.items.find(
-      (item) => item.selection === "A1"
-    );
-
-    const actual = purchaseFunctions.purchase([coinFunctions.dollar], item);
-
-    expect(actual).toEqual({
-      message: `${getItemProps.name} Purchased`,
-      status: "success",
-    });
-  });
 });
 
 describe("unit tests", () => {
@@ -132,8 +127,8 @@ describe("unit tests", () => {
   it("should calculate the change", () => {
     const payment = [
       coinFunctions.dollar.value +
-        coinFunctions.dime.value +
-        coinFunctions.dollar.value,
+      coinFunctions.dime.value +
+      coinFunctions.dollar.value,
     ];
     const item = { price: 1.0 };
     const actual = purchaseFunctions.calculateChange(payment, item);

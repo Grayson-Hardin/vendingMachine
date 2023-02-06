@@ -1,31 +1,60 @@
+const { Client } = require("pg");
 const vendingItemsFunctions = require("../data/vendingItems");
 
-it("should return Dr Pepper if A1 is selected", () => {
-  vendingItemsFunctions.getItemBySelection("A3");
+let client;
+beforeAll(async () => {
+  client = new Client({
+    user: 'postgres',
+    host: 'localhost',
+    database: 'postgres',
+    password: 'mysecretpassword',
+    port: 5432,
+  })
 
-  const actual = vendingItemsFunctions.items.find(
-    (item) => item.selection === "A3"
-  );
+  await client.connect();
+})
+afterAll(async () => {
+  await client.end();
+
+})
+
+it("should return Dr Pepper if A1 is selected", async () => {
+  const actual = await vendingItemsFunctions.getItemBySelection("A3");
 
   expect(actual.name).toEqual("Dr Pepper");
 });
 
-it("should verify item is in stock", () => {
-  vendingItemsFunctions.isItemInStock("A2");
 
-  const actual = vendingItemsFunctions.items.find(
-    (item) => item.selection === "A2"
-  );
+it("should return true if item is in stock", async () => {
 
-  expect(actual.inventory).toEqual(0);
+  await client.query("UPDATE items SET inventory = 5 WHERE selection_id = 'A1'")
+
+  const actual = await vendingItemsFunctions.isItemInStock("A1");
+
+  expect(actual).toEqual(true);
 });
 
-it("should update the inventory", () => {
-  vendingItemsFunctions.updateInventory("A1");
 
-  const actual = vendingItemsFunctions.items.find(
-    (item) => item.selection === "A1"
-  );
+it("should return false if item is not in stock", async () => {
 
-  expect(actual.inventory).toEqual(4);
+  await client.query("UPDATE items SET inventory = 0 WHERE selection_id = 'B1'")
+
+  const actual = await vendingItemsFunctions.isItemInStock("B1");
+
+  expect(actual).toEqual(false);
+});
+
+
+
+it("should update the inventory", async () => {
+
+  await client.query("UPDATE items SET inventory = 5 WHERE selection_id = 'A1'")
+
+  await vendingItemsFunctions.updateInventory("A1");
+
+  const newValue = await client.query("SELECT inventory from items WHERE selection_id = 'A1'")
+
+
+  expect(newValue.rows[0].inventory).toEqual(4);
+
 });
