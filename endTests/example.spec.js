@@ -1,4 +1,3 @@
-// @ts-check
 const { test, expect, chromium } = require('@playwright/test');
 const { Client } = require("pg");
 async function queryDb(number, selection){

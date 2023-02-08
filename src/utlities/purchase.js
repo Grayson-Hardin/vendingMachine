@@ -27,7 +27,8 @@ async function purchase(payment = [], itemSelection) {
       status: "success",
     };
   }
-  vendingItemsFunctions.updateInventory(item, itemSelection);
+  await vendingItemsFunctions.updateInventory(itemSelection);
+
 
   return { message: `${item.name} Purchased`, status: "success" };
 }

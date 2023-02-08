@@ -14,19 +14,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-// app.get("/vendingmachine/selection/:selectionID", (req, res) => {
-//     let selection = req.params.selectionID;
-//     let coins = req.body.coins;
-
-//     purchase(coins, selection);
-
-//     res.send(purchase());
-// });
-
-// app.get("/test", (req, res) => {
-//     // testConsolelog();
-//     purchase();
-// });
 
 app.post("/vendingmachine", async (req, res) => {
   let selection = req.body.selection;
