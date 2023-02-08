@@ -11,7 +11,7 @@ beforeEach(async () => {
   spyIsItemInStock.mockResolvedValue(true)
 
 })
-describe("integration tests", () => {
+describe("integration endTests", () => {
   it("should return error message if item is out of stock", async () => {
     const item = "A2";
 
@@ -86,7 +86,7 @@ describe("integration tests", () => {
 
 });
 
-describe("unit tests", () => {
+describe("unit endTests", () => {
   it("should return true if payment is insufficient", () => {
     const payment = [0.25];
     const item = { price: 1.0 };
