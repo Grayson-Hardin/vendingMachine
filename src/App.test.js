@@ -33,7 +33,7 @@ describe("vending machine component", () => {
     expect(actual).toBeInTheDocument();
   });
 
-  it("should return a insufficent funds message when attempting to click item without providing money", async () => {
+  it("should return a insufficient funds message when attempting to click item without providing money", async () => {
     const spyPurchase = jest.spyOn(lib, "purchaseItem");
     spyPurchase.mockReturnValue({
       message: "Insufficent funds",
@@ -62,7 +62,7 @@ describe("vending machine component", () => {
     expect(spyPurchase).toHaveBeenCalled();
   });
 
-  it("should return item when purchase is sucessful", async () => {
+  it("should return item when purchase is successful", async () => {
     const spyPurchase = jest.spyOn(lib, "purchaseItem");
     spyPurchase.mockReturnValue({
       message: "Mountain Dew Purchased",
@@ -77,7 +77,7 @@ describe("vending machine component", () => {
     expect(spyPurchase).toHaveBeenCalled();
   });
 
-  it("should return item with change when purchase is sucessful and money is more than item price", async () => {
+  it("should return item with change when purchase is successful and money is more than item price", async () => {
     const spyPurchase = jest.spyOn(lib, "purchaseItem");
     spyPurchase.mockReturnValue({
       message: "Mountain Dew Purchased. Change returned: $0.15",
