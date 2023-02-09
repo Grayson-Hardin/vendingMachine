@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon app.js",
-    "devAPI": "nodemon apiCall.js",
+    "devStart": "node app.js",
+    "devAPI": "node apiCall.js",
     "build": "babel ../vendingMachine/apiCall.js -d dist",
     "build1": "babel --presets es2015 src -d dist"
   },
