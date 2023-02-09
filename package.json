@@ -18,8 +18,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "devStart": "nodemon app.js",
     "devAPI": "nodemon apiCall.js",
+    "devStart": "nodemon app.js",
     "start": "react-scripts start",
     "endTest": "npx playwright test --workers=1",
     "endDebug": "npx playwright test --debug",
