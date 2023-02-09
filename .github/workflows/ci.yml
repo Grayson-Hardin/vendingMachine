@@ -22,6 +22,7 @@ jobs:
         node-version: 18.13.0
         cache: 'npm'
     - run: docker compose up -d
-    - run: npm ci
+    - run: npm ci npm run convert:build ```
     - run: npm run testNoWatch
     - run: cd src/api && npm run devAPI
+
