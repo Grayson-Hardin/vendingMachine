@@ -22,7 +22,7 @@
     "start": "react-scripts start",
     "endTest": "npx playwright test --workers=1",
     "endDebug": "npx playwright test --debug",
-    "testNoWatch": "DEBUG_PRINT_LIMIT=1000000 react-scripts test --watchAll=false",
+    "testNoWatch": "DEBUG_PRINT_LIMIT=1000000 react-scripts test --watch=false",
     "build": "react-scripts build",
     "test": "DEBUG_PRINT_LIMIT=1000000 react-scripts test",
     "eject": "react-scripts eject"
