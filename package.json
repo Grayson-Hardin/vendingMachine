@@ -18,7 +18,6 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "devAPI": "cd src/api && node apiCall.js",
     "devStart": "node app.js",
     "start": "react-scripts start",
     "endTest": "npx playwright test --workers=1",
