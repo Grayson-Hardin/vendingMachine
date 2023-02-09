@@ -10,7 +10,6 @@ import DoneIcon from "@mui/icons-material/Done";
 import { purchaseItem } from "./api/service";
 
 function VendingMachine() {
-  console.log("rendered")
   const [showMessage, setShowMessage] = useState(null);
   const [selection, setSelection] = useState();
   const [payment, setPayment] = useState(0);
@@ -214,15 +213,15 @@ function VendingMachine() {
           </Button>
         </div>
         <div>
-        <Snackbar
-          className="alert"
-          anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-          open={open}
-        >
-          <Alert severity={status} sx={{ width: "100%" }}>
-            {showMessage}
-          </Alert>
-        </Snackbar>
+          <Snackbar
+            className="alert"
+            anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+            open={open}
+          >
+            <Alert severity={status} sx={{ width: "100%" }}>
+              {showMessage}
+            </Alert>
+          </Snackbar>
         </div>
       </Paper>
     </Box>
