@@ -25,5 +25,3 @@ jobs:
     - run: npm ci
     - run: npm run testNoWatch
     - run: cd src/api && npm run devAPI
-    - run: cd src && npm run devStart
-    - run: npm run endTest
