@@ -19,6 +19,7 @@
   },
   "scripts": {
     "devStart": "node app.js",
+    "devAPI": "node apiCall.js -d",
     "start": "react-scripts start",
     "endTest": "npx playwright test --workers=1",
     "endDebug": "npx playwright test --debug",
