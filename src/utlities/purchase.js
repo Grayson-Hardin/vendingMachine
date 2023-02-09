@@ -2,14 +2,15 @@ const coinFunctions = require("../data/coins");
 const vendingItemsFunctions = require("../data/vendingItems");
 
 async function purchase(payment = [], itemSelection) {
-
   const item = await vendingItemsFunctions.getItemBySelection(itemSelection);
 
   const returnCoins = coinFunctions.coinManager(payment);
 
   let roundTheCoins = returnCoins.toFixed(2);
 
-  if (await vendingItemsFunctions.isItemInStock(item.selection_id) === false) {
+  if (
+    (await vendingItemsFunctions.isItemInStock(item.selection_id)) === false
+  ) {
     return { message: "Item out of stock", status: "error" };
   }
 
@@ -19,7 +20,7 @@ async function purchase(payment = [], itemSelection) {
       status: "error",
     };
   }
-  
+
   if (paymentOverflow(roundTheCoins, item) === true) {
     const change = calculateChange(roundTheCoins, item);
     return {
@@ -28,7 +29,6 @@ async function purchase(payment = [], itemSelection) {
     };
   }
   await vendingItemsFunctions.updateInventory(itemSelection);
-
 
   return { message: `${item.name} Purchased`, status: "success" };
 }
