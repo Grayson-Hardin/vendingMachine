@@ -2,21 +2,27 @@ const purchaseFunctions = require("../utlities/purchase");
 const coinFunctions = require("../data/coins");
 const vendingItemsFunctions = require("../data/vendingItems");
 
-
 beforeEach(async () => {
-  const spyGetItemBySelection = jest.spyOn(vendingItemsFunctions, "getItemBySelection")
-  spyGetItemBySelection.mockResolvedValue({ name: 'Mountain Dew', price: 1, inventory: 5, selection_id: 'A1' })
+  const spyGetItemBySelection = jest.spyOn(
+    vendingItemsFunctions,
+    "getItemBySelection"
+  );
+  spyGetItemBySelection.mockResolvedValue({
+    name: "Mountain Dew",
+    price: 1,
+    inventory: 5,
+    selection_id: "A1",
+  });
 
-  const spyIsItemInStock = jest.spyOn(vendingItemsFunctions, "isItemInStock")
-  spyIsItemInStock.mockResolvedValue(true)
-
-})
+  const spyIsItemInStock = jest.spyOn(vendingItemsFunctions, "isItemInStock");
+  spyIsItemInStock.mockResolvedValue(true);
+});
 describe("integration endTests", () => {
   it("should return error message if item is out of stock", async () => {
     const item = "A2";
 
-    const spyIsItemInStock = jest.spyOn(vendingItemsFunctions, "isItemInStock")
-    spyIsItemInStock.mockResolvedValue(false)
+    const spyIsItemInStock = jest.spyOn(vendingItemsFunctions, "isItemInStock");
+    spyIsItemInStock.mockResolvedValue(false);
 
     const actual = await purchaseFunctions.purchase([], item);
 
@@ -58,32 +64,44 @@ describe("integration endTests", () => {
 
     const actual = await purchaseFunctions.purchase([], item);
 
-    expect(actual).toEqual({ message: "Insufficient funds: item costs $1", status: "error", });
+    expect(actual).toEqual({
+      message: "Insufficient funds: item costs $1",
+      status: "error",
+    });
   });
 
   it("should return a message with the change amount", async () => {
-    const spyCoinManager = jest.spyOn(coinFunctions, "coinManager")
-    spyCoinManager.mockReturnValue(1.10)
+    const spyCoinManager = jest.spyOn(coinFunctions, "coinManager");
+    spyCoinManager.mockReturnValue(1.1);
 
     const item = "A1";
 
     const actual = await purchaseFunctions.purchase([], item);
 
-    expect(actual.message).toEqual(`Mountain Dew Purchased. Change returned: $0.10`)
-
+    expect(actual.message).toEqual(
+      `Mountain Dew Purchased. Change returned: $0.10`
+    );
   });
 
-  it("should return thank you message if purchase was sucessfull", async () => {
-    const spyCoinManager = jest.spyOn(coinFunctions, "coinManager")
-    spyCoinManager.mockReturnValue(1.00)
+  it("should return thank you message if purchase was successful", async () => {
+    const spyCoinManager = jest.spyOn(coinFunctions, "coinManager");
+    spyCoinManager.mockReturnValue(1.0);
+
+    const spyOnUpdateInventory = jest.spyOn(
+      vendingItemsFunctions,
+      "updateInventory"
+    );
+    spyOnUpdateInventory.mockResolvedValue(5);
 
     const item = "A1";
 
     const actual = await purchaseFunctions.purchase([], item);
 
-    expect(actual).toEqual({ message: `Mountain Dew Purchased`, status: "success" });
+    expect(actual).toEqual({
+      message: `Mountain Dew Purchased`,
+      status: "success",
+    });
   });
-
 });
 
 describe("unit endTests", () => {
@@ -127,8 +145,8 @@ describe("unit endTests", () => {
   it("should calculate the change", () => {
     const payment = [
       coinFunctions.dollar.value +
-      coinFunctions.dime.value +
-      coinFunctions.dollar.value,
+        coinFunctions.dime.value +
+        coinFunctions.dollar.value,
     ];
     const item = { price: 1.0 };
     const actual = purchaseFunctions.calculateChange(payment, item);
