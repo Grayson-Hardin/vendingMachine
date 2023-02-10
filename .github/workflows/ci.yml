@@ -24,8 +24,8 @@ jobs:
     - run: docker compose up -d
     - run: npm ci
     - run: npm run testNoWatch
-    - run: npx playwright install
     - run: cd src/api && npm run devAPI & cd src && npm run start &
+    - run: npx playwright install
     - run: cd src && npm run endTest
 
 
