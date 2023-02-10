@@ -24,6 +24,6 @@ jobs:
     - run: docker compose up -d
     - run: npm ci
     - run: npm run testNoWatch
-    - run: cd src && npm run devAPI &
+    - run: cd src && npm run devAPI & npm run devStart &
 
 
